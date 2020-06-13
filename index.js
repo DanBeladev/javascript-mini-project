@@ -1,10 +1,12 @@
 let queryToSend = '';
-const API_KEY = '1ba5b501bc2107505d774375b8abf7ca';
-const API_URL = `https://financialmodelingprep.com/api/v3/search?query=${queryToSend}&limit=10&exchange=NASDAQ&apikey=${API_KEY}`;
-const COMPANY_URL = `https://financialmodelingprep.com/api/v3/profile/`;
+// const API_KEY = '1ba5b501bc2107505d774375b8abf7ca';
+// const API_URL = `https://financialmodelingprep.com/api/v3/search?query=${queryToSend}&limit=10&exchange=NASDAQ&apikey=${API_KEY}`;
+
+
 function showSpinner(spinner) {
   spinner.className = 'show';
 }
+
 function hideSpinner(spinner) {
   spinner.className = '';
 }
@@ -21,14 +23,14 @@ async function searchClicked() {
   input.value = '';
   try {
     showSpinner(spinner);
-    var response = await fetch(API_URL);
-    var data = await response.json();
+    // const data = await getCompanies(API_URL);
+    const data = await getCompanies(queryToSend);
     data.forEach((item) => {
       let liElement = document.createElement('li');
       const text = `${item.name}, (${item.symbol})`;
       const link = document.createElement('a');
       link.appendChild(document.createTextNode(text));
-      link.href = '#';
+      link.href = `company.html?symbol=${item.symbol}`;
       liElement.appendChild(link);
       list.appendChild(liElement);
     });
