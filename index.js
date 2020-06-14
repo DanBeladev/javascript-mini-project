@@ -1,7 +1,4 @@
 let queryToSend = '';
-// const API_KEY = '1ba5b501bc2107505d774375b8abf7ca';
-// const API_URL = `https://financialmodelingprep.com/api/v3/search?query=${queryToSend}&limit=10&exchange=NASDAQ&apikey=${API_KEY}`;
-
 
 function showSpinner(spinner) {
   spinner.className = 'show';
@@ -23,7 +20,6 @@ async function searchClicked() {
   input.value = '';
   try {
     showSpinner(spinner);
-    // const data = await getCompanies(API_URL);
     const data = await getCompanies(queryToSend);
     data.forEach((item) => {
       let liElement = document.createElement('li');
