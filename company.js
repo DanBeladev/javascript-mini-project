@@ -1,37 +1,62 @@
 let symbol = '';
 
+function setInnerHtml(id, text) {
+  element = document.getElementById(id);
+  switch (id) {
+    case 'website':
+      if (text) {
+        element.href = text;
+      } else {
+        element.href = '#';
+        document.getElementById('visit').innerHTML = '';
+      }
+      break;
+    case 'ceo-name':
+      if (!text) {
+        document.getElementById('ceo').innerHTML = '';
+      }
+      break;
+    case 'icon':
+      text ? (element.src = text) : (element.src = '');
+      return;
+
+    default:
+      break;
+  }
+  text ? (element.innerHTML = text) : (element.innerHTML = '');
+}
+
 function linkElements(companyObj) {
-  document.getElementById('name').innerHTML = companyObj.companyName || '';
-  document.getElementById('icon').src = companyObj.image || '';
-  document.getElementById('symbol').innerHTML = companyObj.symbol || '';
-  document.getElementById('sector').innerHTML =
-    `${companyObj.sector}, ${companyObj.industry}` || '';
-  document.getElementById('price').innerHTML =
-    `Price: ${companyObj.price}$` || '';
-  document.getElementById('description').innerHTML =
-    companyObj.description || '';
-  const websiteElem = document.getElementById('website');
-  if (companyObj) {
-    websiteElem.innerHTML = companyObj.website;
-    websiteElem.href = companyObj.website;
-  } else {
-    document.getElementById('visit').innerHTML = '';
-    websiteElem.innerHTML = '';
-    websiteElem.href = '#';
-  }
-  if (companyObj.ceo) {
-    document.getElementById('ceo-name').innerHTML = companyObj.ceo;
-  } else {
-    document.getElementById('ceo-name').innerHTML = '';
-    document.getElementById('ceo').innerHTML = '';
-  }
+  const {
+    companyName,
+    image,
+    symbol,
+    sector,
+    industry,
+    price,
+    description,
+    website,
+    ceo,
+  } = companyObj;
+
+  setInnerHtml('name', companyName);
+  setInnerHtml('symbol', symbol);
+  setInnerHtml('sector', `${sector}, ${industry}`);
+  setInnerHtml('price', `Price: ${price}$`);
+  setInnerHtml('description', description);
+  setInnerHtml('website', website);
+  setInnerHtml('ceo-name', ceo);
+  setInnerHtml('icon', image);
 }
 
 async function getCompanyDataFunc(symbol) {
   try {
     const data = await getCompanyData(symbol);
-    const companyObj = data[0];
-    linkElements(companyObj);
+    if(data.length!==0)
+    {
+      const companyObj = data[0];
+      linkElements(companyObj);
+    }
   } catch (err) {
     console.log(err);
   }

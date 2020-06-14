@@ -18,6 +18,9 @@ display: flex;
     font-weight: bold;
     border: 2px solid green;
 }
+#search-btn:hover {
+  cursor: pointer;
+}
 
 #myInput {
     background-position: 10px 12px; 
